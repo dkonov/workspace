@@ -1,0 +1,37 @@
+package org.example.com.soap1;
+
+import java.io.IOException;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.util.Log;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.BasicHttpContext;
+import org.apache.http.protocol.HttpContext;
+
+public class Soap1Activity extends Activity {
+    /** Called when the activity is first created. */
+	private static final String TAG = "SOAP1";
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpContext localContext = new BasicHttpContext();
+        HttpGet httpGet = new HttpGet("http://www.yandex.ru/");
+        try {
+			HttpResponse response = httpClient.execute(httpGet, localContext);
+			
+			Log.d(TAG, response.toString());
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
+}
